@@ -70,5 +70,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\Aptacode.CSharp.Utilities\Aptacode.CSharp.Utilities\Aptacode.CSharp.Utilities.csproj">
+      <Project>{24478c7a-7249-44e3-a621-c5c02083d79f}</Project>
+      <Name>Aptacode.CSharp.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
