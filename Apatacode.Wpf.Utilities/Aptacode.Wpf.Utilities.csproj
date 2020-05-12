@@ -64,7 +64,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\DoubleClickTextBehaviour.cs" />
+    <Compile Include="Behaviors\DoubleClickTextBehavior.cs" />
     <Compile Include="DependencyProperties\SizeObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -100,7 +100,7 @@
     <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Dictionarys\BooleanValueDictionary.xaml">
+    <Page Include="Dictionaries\BooleanValueDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

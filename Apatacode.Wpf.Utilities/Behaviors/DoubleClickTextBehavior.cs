@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace Aptacode.Wpf.Utilities.Behaviours
+namespace Aptacode.Wpf.Utilities.Behaviors
 {
     public class DoubleClickTextBoxBehaviour : Behavior<TextBox>
     {
