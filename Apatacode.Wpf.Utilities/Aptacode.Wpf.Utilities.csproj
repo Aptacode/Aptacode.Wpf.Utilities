@@ -64,7 +64,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviours\DoubleClickTextBehaviour.cs" />
+    <Compile Include="Behaviors\DoubleClickTextBehaviour.cs" />
     <Compile Include="DependencyProperties\SizeObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
