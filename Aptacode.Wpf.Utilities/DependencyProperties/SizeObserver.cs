@@ -22,7 +22,7 @@ namespace Aptacode.Wpf.Utilities.DependencyProperties
 
         public static bool GetObserve(FrameworkElement frameworkElement)
         {
-            return (bool)frameworkElement.GetValue(ObserveProperty);
+            return (bool) frameworkElement.GetValue(ObserveProperty);
         }
 
         public static void SetObserve(FrameworkElement frameworkElement, bool observe)
@@ -32,7 +32,7 @@ namespace Aptacode.Wpf.Utilities.DependencyProperties
 
         public static double GetObservedWidth(FrameworkElement frameworkElement)
         {
-            return (double)frameworkElement.GetValue(ObservedWidthProperty);
+            return (double) frameworkElement.GetValue(ObservedWidthProperty);
         }
 
         public static void SetObservedWidth(FrameworkElement frameworkElement, double observedWidth)
@@ -42,7 +42,7 @@ namespace Aptacode.Wpf.Utilities.DependencyProperties
 
         public static double GetObservedHeight(FrameworkElement frameworkElement)
         {
-            return (double)frameworkElement.GetValue(ObservedHeightProperty);
+            return (double) frameworkElement.GetValue(ObservedHeightProperty);
         }
 
         public static void SetObservedHeight(FrameworkElement frameworkElement, double observedHeight)
@@ -52,9 +52,9 @@ namespace Aptacode.Wpf.Utilities.DependencyProperties
 
         private static void OnObserveChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var frameworkElement = (FrameworkElement)dependencyObject;
+            var frameworkElement = (FrameworkElement) dependencyObject;
 
-            if ((bool)e.NewValue)
+            if ((bool) e.NewValue)
             {
                 frameworkElement.SizeChanged += OnFrameworkElementSizeChanged;
                 UpdateObservedSizesForFrameworkElement(frameworkElement);
@@ -67,7 +67,7 @@ namespace Aptacode.Wpf.Utilities.DependencyProperties
 
         private static void OnFrameworkElementSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateObservedSizesForFrameworkElement((FrameworkElement)sender);
+            UpdateObservedSizesForFrameworkElement((FrameworkElement) sender);
         }
 
         private static void UpdateObservedSizesForFrameworkElement(FrameworkElement frameworkElement)
@@ -75,7 +75,6 @@ namespace Aptacode.Wpf.Utilities.DependencyProperties
             // WPF 4.0 onwards
             frameworkElement.SetCurrentValue(ObservedWidthProperty, frameworkElement.ActualWidth);
             frameworkElement.SetCurrentValue(ObservedHeightProperty, frameworkElement.ActualHeight);
-
         }
     }
 }
