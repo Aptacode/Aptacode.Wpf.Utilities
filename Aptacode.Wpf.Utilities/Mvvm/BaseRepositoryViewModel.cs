@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,13 +13,15 @@ namespace Aptacode.Wpf.Utilities.Mvvm
 {
     public abstract class BaseRepositoryViewModel<TEntity> : BindableBase where TEntity : EntityBase
     {
-        private readonly IRepository<TEntity> _repository;
+        protected readonly IRepository<TEntity> Repository;
 
         protected BaseRepositoryViewModel(IRepository<TEntity> repository)
         {
-            _repository = repository;
+            Repository = repository;
             new TaskFactory().StartNew(async () => await Load().ConfigureAwait(false));
         }
+
+        public event EventHandler<BaseViewModel<TEntity>> SelectedItemChanged;
 
         #region Methods
 
@@ -25,20 +29,25 @@ namespace Aptacode.Wpf.Utilities.Mvvm
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Selected = null;
-                ViewModels.Clear();
+                SelectedItem = null;
+                Items.Clear();
             });
         }
 
         public async Task Load()
         {
-            var models = await _repository.GetAll().ConfigureAwait(false);
+            var models = await GetModels().ConfigureAwait(false);
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ViewModels.Clear();
-                ViewModels.AddRange(models.Select(CreateViewModel));
+                Items.Clear();
+                Items.AddRange(models.Select(CreateViewModel));
             });
+        }
+
+        protected virtual async Task<IEnumerable<TEntity>> GetModels()
+        {
+            return await Repository.GetAll().ConfigureAwait(false);
         }
 
         public abstract BaseViewModel<TEntity> CreateViewModel(TEntity model);
@@ -51,7 +60,7 @@ namespace Aptacode.Wpf.Utilities.Mvvm
                 return;
             }
 
-            await _repository.Update(viewModel.Model).ConfigureAwait(false);
+            await Repository.Update(viewModel.Model).ConfigureAwait(false);
         }
 
         public async Task Delete(BaseViewModel<TEntity> viewModel)
@@ -61,22 +70,26 @@ namespace Aptacode.Wpf.Utilities.Mvvm
                 return;
             }
 
-            await _repository.Delete(viewModel.Model.Id).ConfigureAwait(false);
+            await Repository.Delete(viewModel.Model.Id).ConfigureAwait(false);
         }
 
         #endregion
 
         #region Properties
 
-        public ObservableCollection<BaseViewModel<TEntity>> ViewModels { get; set; } =
+        public ObservableCollection<BaseViewModel<TEntity>> Items { get; set; } =
             new ObservableCollection<BaseViewModel<TEntity>>();
 
-        private BaseViewModel<TEntity> _selected;
+        private BaseViewModel<TEntity> _selectedItem;
 
-        public BaseViewModel<TEntity> Selected
+        public BaseViewModel<TEntity> SelectedItem
         {
-            get => _selected;
-            set => SetProperty(ref _selected, value);
+            get => _selectedItem;
+            set
+            {
+                SetProperty(ref _selectedItem, value);
+                SelectedItemChanged?.Invoke(this, _selectedItem);
+            }
         }
 
         #endregion
@@ -88,14 +101,14 @@ namespace Aptacode.Wpf.Utilities.Mvvm
         public DelegateCommand CreateCommand =>
             _createCommand ?? (_createCommand = new DelegateCommand(async () =>
             {
-                await _repository.Create(CreateNew()).ConfigureAwait(false);
+                await Repository.Create(CreateNew()).ConfigureAwait(false);
                 await Load().ConfigureAwait(false);
             }));
 
         private DelegateCommand _loadCommand;
 
         public DelegateCommand LoadCommand =>
-            _loadCommand ?? (_loadCommand = new DelegateCommand(async () => { await Load().ConfigureAwait(false); }));
+            _loadCommand ?? (_loadCommand = new DelegateCommand(async () => await Load().ConfigureAwait(false)));
 
         private DelegateCommand _clearCommand;
 
