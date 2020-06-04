@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Aptacode.CSharp.Utilities.Persistence;
-using Aptacode.CSharp.Utilities.Persistence.Repository;
+using Aptacode.CSharp.Common.Persistence;
+using Aptacode.CSharp.Common.Persistence.Repository;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -94,37 +94,33 @@ namespace Aptacode.Wpf.Utilities.Mvvm
         private DelegateCommand _createCommand;
 
         public DelegateCommand CreateCommand =>
-            _createCommand ?? (_createCommand = new DelegateCommand(async () =>
+            _createCommand ??= new DelegateCommand(async () =>
             {
                 await Repository.Create(CreateNew()).ConfigureAwait(false);
                 await Load().ConfigureAwait(false);
-            }));
+            });
 
         private DelegateCommand _loadCommand;
 
         public DelegateCommand LoadCommand =>
-            _loadCommand ?? (_loadCommand = new DelegateCommand(async () => await Load().ConfigureAwait(false)));
+            _loadCommand ??= new DelegateCommand(async () => await Load().ConfigureAwait(false));
 
         private DelegateCommand _clearCommand;
 
         public DelegateCommand ClearCommand =>
-            _clearCommand ?? (_clearCommand = new DelegateCommand(Clear));
-
+            _clearCommand ??= new DelegateCommand(Clear);
 
         private DelegateCommand<BaseViewModel<TEntity>> _updateCommand;
 
         public DelegateCommand<BaseViewModel<TEntity>> UpdateCommand =>
-            _updateCommand ?? (_updateCommand =
-                new DelegateCommand<BaseViewModel<TEntity>>(async viewModel =>
-                    await Update(viewModel).ConfigureAwait(false)));
-
+            _updateCommand ??= new DelegateCommand<BaseViewModel<TEntity>>(async viewModel =>
+                await Update(viewModel).ConfigureAwait(false));
 
         private DelegateCommand<BaseViewModel<TEntity>> _deleteCommand;
 
         public DelegateCommand<BaseViewModel<TEntity>> DeleteCommand =>
-            _deleteCommand ?? (_deleteCommand =
-                new DelegateCommand<BaseViewModel<TEntity>>(async viewModel =>
-                    await Delete(viewModel).ConfigureAwait(false)));
+            _deleteCommand ??= new DelegateCommand<BaseViewModel<TEntity>>(async viewModel =>
+                await Delete(viewModel).ConfigureAwait(false));
 
         #endregion
     }
