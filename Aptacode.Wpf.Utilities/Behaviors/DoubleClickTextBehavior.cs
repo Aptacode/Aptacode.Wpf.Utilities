@@ -22,15 +22,9 @@ namespace Aptacode.Wpf.Utilities.Behaviors
 
         private void AssociatedObjectOnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Left)
-            {
-                return;
-            }
+            if (e.ChangedButton != MouseButton.Left) return;
 
-            if (AssociatedObject.Focusable)
-            {
-                return; //fix an issue of selecting all text on double click
-            }
+            if (AssociatedObject.Focusable) return; //fix an issue of selecting all text on double click
 
             AssociatedObject.Cursor = Cursors.IBeam;
             AssociatedObject.Focusable = true;
@@ -44,10 +38,7 @@ namespace Aptacode.Wpf.Utilities.Behaviors
         {
             var delta = Stopwatch.GetTimestamp() - _timestamp;
 
-            if (new TimeSpan(delta).TotalSeconds < 1)
-            {
-                return;
-            }
+            if (new TimeSpan(delta).TotalSeconds < 1) return;
 
             AssociatedObject.Cursor = Cursors.Arrow;
             AssociatedObject.Focusable = false;

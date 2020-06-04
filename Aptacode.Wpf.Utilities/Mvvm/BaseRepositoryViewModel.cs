@@ -11,13 +11,14 @@ using Prism.Mvvm;
 
 namespace Aptacode.Wpf.Utilities.Mvvm
 {
-    public abstract class BaseRepositoryViewModel<TEntity> : BindableBase where TEntity : EntityBase
+    public abstract class BaseRepositoryViewModel<TEntity> : BindableBase where TEntity : IEntity
     {
         protected readonly IRepository<TEntity> Repository;
 
         protected BaseRepositoryViewModel(IRepository<TEntity> repository)
         {
-            Repository = repository;
+            Repository = repository ?? throw new NullReferenceException("Repository was null");
+
             new TaskFactory().StartNew(async () => await Load().ConfigureAwait(false));
         }
 
@@ -55,20 +56,14 @@ namespace Aptacode.Wpf.Utilities.Mvvm
 
         public async Task Update(BaseViewModel<TEntity> viewModel)
         {
-            if (viewModel?.Model == null)
-            {
-                return;
-            }
+            if (viewModel.Model == null) return;
 
             await Repository.Update(viewModel.Model).ConfigureAwait(false);
         }
 
         public async Task Delete(BaseViewModel<TEntity> viewModel)
         {
-            if (viewModel?.Model == null)
-            {
-                return;
-            }
+            if (viewModel.Model == null) return;
 
             await Repository.Delete(viewModel.Model.Id).ConfigureAwait(false);
         }

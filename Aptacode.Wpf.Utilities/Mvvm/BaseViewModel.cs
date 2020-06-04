@@ -3,7 +3,7 @@ using Prism.Mvvm;
 
 namespace Aptacode.Wpf.Utilities.Mvvm
 {
-    public abstract class BaseViewModel<TModel> : BindableBase, IEquatable<BaseViewModel<TModel>> where TModel : class
+    public abstract class BaseViewModel<TModel> : BindableBase, IEquatable<BaseViewModel<TModel>>
     {
         protected BaseViewModel()
         {
