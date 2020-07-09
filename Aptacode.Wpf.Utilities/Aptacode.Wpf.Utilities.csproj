@@ -14,10 +14,10 @@
     <RepositoryUrl>https://github.com/Timmoth/Aptacode.Wpf.Utilities</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product>Wpf.Utilities</Product>
-    <Version>1.0.0.5</Version>
+    <Version>1.0.0.7</Version>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <AssemblyVersion>1.0.0.5</AssemblyVersion>
-    <FileVersion>1.0.0.5</FileVersion>
+    <AssemblyVersion>1.0.0.7</AssemblyVersion>
+    <FileVersion>1.0.0.7</FileVersion>
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aptacode.CSharp.Common.Persistence" Version="1.0.0" />
+    <PackageReference Include="Aptacode.CSharp.Common.Persistence" Version="1.0.0.28" />
     <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>

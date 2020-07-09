@@ -20,30 +20,24 @@ namespace Aptacode.Wpf.Utilities.DependencyProperties
             typeof(double),
             typeof(SizeObserver));
 
-        public static bool GetObserve(FrameworkElement frameworkElement)
-        {
-            return (bool) frameworkElement.GetValue(ObserveProperty);
-        }
+        public static bool GetObserve(FrameworkElement frameworkElement) =>
+            (bool) frameworkElement.GetValue(ObserveProperty);
 
         public static void SetObserve(FrameworkElement frameworkElement, bool observe)
         {
             frameworkElement.SetValue(ObserveProperty, observe);
         }
 
-        public static double GetObservedWidth(FrameworkElement frameworkElement)
-        {
-            return (double) frameworkElement.GetValue(ObservedWidthProperty);
-        }
+        public static double GetObservedWidth(FrameworkElement frameworkElement) =>
+            (double) frameworkElement.GetValue(ObservedWidthProperty);
 
         public static void SetObservedWidth(FrameworkElement frameworkElement, double observedWidth)
         {
             frameworkElement.SetValue(ObservedWidthProperty, observedWidth);
         }
 
-        public static double GetObservedHeight(FrameworkElement frameworkElement)
-        {
-            return (double) frameworkElement.GetValue(ObservedHeightProperty);
-        }
+        public static double GetObservedHeight(FrameworkElement frameworkElement) =>
+            (double) frameworkElement.GetValue(ObservedHeightProperty);
 
         public static void SetObservedHeight(FrameworkElement frameworkElement, double observedHeight)
         {

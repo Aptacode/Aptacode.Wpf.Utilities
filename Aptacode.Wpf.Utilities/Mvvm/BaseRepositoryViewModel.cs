@@ -11,11 +11,11 @@ using Prism.Mvvm;
 
 namespace Aptacode.Wpf.Utilities.Mvvm
 {
-    public abstract class BaseRepositoryViewModel<TEntity> : BindableBase where TEntity : IEntity
+    public abstract class BaseRepositoryViewModel<TKey, TEntity> : BindableBase where TEntity : IEntity<TKey>
     {
-        protected readonly IRepository<TEntity> Repository;
+        protected readonly IGenericAsyncRepository<TKey, TEntity> Repository;
 
-        protected BaseRepositoryViewModel(IRepository<TEntity> repository)
+        protected BaseRepositoryViewModel(IGenericAsyncRepository<TKey, TEntity> repository)
         {
             Repository = repository ?? throw new NullReferenceException("Repository was null");
 
@@ -46,26 +46,30 @@ namespace Aptacode.Wpf.Utilities.Mvvm
             });
         }
 
-        protected virtual async Task<IEnumerable<TEntity>> GetModels()
-        {
-            return await Repository.GetAll().ConfigureAwait(false);
-        }
+        protected virtual async Task<IEnumerable<TEntity>> GetModels() =>
+            await Repository.GetAllAsync().ConfigureAwait(false);
 
         public abstract BaseViewModel<TEntity> CreateViewModel(TEntity model);
         public abstract TEntity CreateNew();
 
         public async Task Update(BaseViewModel<TEntity> viewModel)
         {
-            if (viewModel.Model == null) return;
+            if (viewModel.Model == null)
+            {
+                return;
+            }
 
-            await Repository.Update(viewModel.Model).ConfigureAwait(false);
+            await Repository.UpdateAsync(viewModel.Model).ConfigureAwait(false);
         }
 
         public async Task Delete(BaseViewModel<TEntity> viewModel)
         {
-            if (viewModel.Model == null) return;
+            if (viewModel.Model == null)
+            {
+                return;
+            }
 
-            await Repository.Delete(viewModel.Model.Id).ConfigureAwait(false);
+            await Repository.DeleteAsync(viewModel.Model.Id).ConfigureAwait(false);
         }
 
         #endregion
@@ -96,7 +100,7 @@ namespace Aptacode.Wpf.Utilities.Mvvm
         public DelegateCommand CreateCommand =>
             _createCommand ??= new DelegateCommand(async () =>
             {
-                await Repository.Create(CreateNew()).ConfigureAwait(false);
+                await Repository.CreateAsync(CreateNew()).ConfigureAwait(false);
                 await Load().ConfigureAwait(false);
             });
 
