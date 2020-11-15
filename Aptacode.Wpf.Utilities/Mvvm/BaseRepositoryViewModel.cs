@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Aptacode.CSharp.Common.Persistence;
 using Aptacode.CSharp.Common.Persistence.Repository;
-using Prism.Commands;
-using Prism.Mvvm;
+using Aptacode.CSharp.Common.Utilities.Extensions;
+using Aptacode.CSharp.Common.Utilities.Mvvm;
 
 namespace Aptacode.Wpf.Utilities.Mvvm
 {
@@ -98,7 +98,7 @@ namespace Aptacode.Wpf.Utilities.Mvvm
         private DelegateCommand _createCommand;
 
         public DelegateCommand CreateCommand =>
-            _createCommand ??= new DelegateCommand(async () =>
+            _createCommand ??= new DelegateCommand(async (_) =>
             {
                 await Repository.CreateAsync(CreateNew()).ConfigureAwait(false);
                 await Load().ConfigureAwait(false);
@@ -107,12 +107,12 @@ namespace Aptacode.Wpf.Utilities.Mvvm
         private DelegateCommand _loadCommand;
 
         public DelegateCommand LoadCommand =>
-            _loadCommand ??= new DelegateCommand(async () => await Load().ConfigureAwait(false));
+            _loadCommand ??= new DelegateCommand(async (_) => await Load().ConfigureAwait(false));
 
         private DelegateCommand _clearCommand;
 
         public DelegateCommand ClearCommand =>
-            _clearCommand ??= new DelegateCommand(Clear);
+            _clearCommand ??= new DelegateCommand((_) => Clear());
 
         private DelegateCommand<BaseViewModel<TEntity>> _updateCommand;
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using Prism.Mvvm;
+using Aptacode.CSharp.Common.Utilities.Mvvm;
 
 namespace Aptacode.Wpf.Utilities.Mvvm
 {

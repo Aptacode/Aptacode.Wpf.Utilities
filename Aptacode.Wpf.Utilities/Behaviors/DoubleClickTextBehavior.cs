@@ -3,13 +3,14 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 
 namespace Aptacode.Wpf.Utilities.Behaviors
 {
     public class DoubleClickTextBoxBehaviour : Behavior<TextBox>
     {
         private long _timestamp;
+
 
         protected override void OnAttached()
         {
